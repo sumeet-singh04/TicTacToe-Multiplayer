@@ -1,0 +1,112 @@
+<!doctype html>
+<html ng-app="ticTacToe">
+<head>
+    <meta name="viewport" content="width=device-width,height=device-height"/>
+
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="ticTacToe.css"/>
+</head>
+<body class="container" ng-controller="gameCtrl as ctrl">
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Enter Title here</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row" ng-repeat="row in ctrl.gameGrid track by $index">
+                            <div class="col-xs-4 box" ng-repeat="col in row track by $index"
+                                 ng-click="ctrl.setCol($index,row)">{{col}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="angular.js"></script>
+<script src="ui-bootstrap-tpls-1.2.5.min.js"></script>
+<script src="app.js"></script>
+<script src="socketController.js"></script>
+
+<script type="text/ng-template" id="initial-modal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Hello! Please select what do you want to do ?</h3>
+    </div>
+    <form novalidate name="gameForm">
+        <div class="modal-body">
+            Do you want to make a new game 'Click New Game' OR Do you want to join a friend, enter the game id and
+            'Click on Join'?
+            <br/>
+
+            <div class="form-inline">
+                <label for="player-name" class="control-label col-xs-3">Name :</label>
+
+                <div class="col-xs-9">
+                    <input class="form-control" id="player-name" type="text" placeholder="Enter your name."
+                           ng-model="playerName" required="required" name="playerName"/>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <label for="game-id" class="control-label">Game id :</label>
+                <input class="form-control" id="game-id" type="text" placeholder="Enter game id."
+                       ng-model="gameId"/>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-disabled="gameForm.playerName.$error.required" type="button"
+                    ng-click="$close({newGame:true,playerName:playerName});">New Game
+            </button>
+            <button class="btn btn-warning" ng-disabled="!gameId.length" type="button" ng-click="$close({newGame:false,playerName:playerName,gameId: gameId});">Join</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="waiting-modal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Waiting ....</h3>
+    </div>
+    <div class="modal-body">
+        <div ng-show="!hasOtherPlayerJoined">
+            <p>Waiting for other player to join.</p>
+
+            <p>If you haven't, please share this game id, <strong>{{gameId}}</strong> with your friend to join.</p>
+        </div>
+        <div ng-show="hasOtherPlayerJoined">
+            <p>Waiting for {{waitingFor}} to take his turn.</p>
+        </div>
+
+    </div>
+</script>
+
+<script type="text/ng-template" id="lost-won-modal.html">
+    <div class="modal-header">
+        <div ng-if="isTie">
+            <h3 class="modal-title"> It is a Tie! </h3>
+            <p>The first person to hit 'Play Again !' will get the first turn. Hit 'Play Again !' fast .... :D</p>
+        </div>
+        <div ng-if="!isTie">
+            <h3 class="modal-title">
+                <span ng-show="hasWon">You have won :) ! Now the other player would choose to play again or not!</span>
+                <span ng-hide="hasWon">You have lost :( ! Click 'Play again' to take your revenge!</span>
+            </h3>
+        </div>
+    </div>
+    <div class="modal-footer" ng-hide="hasWon" >
+        <button class="btn btn-primary" ng-click="$close()">
+            Play again !
+        </button>
+        <button class="btn btn-warning" ng-click="$dismiss()">
+            I quit !
+        </button>
+    </div>
+</script>
+
+</body>
+
+
+</html>

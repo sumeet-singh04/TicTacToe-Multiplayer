@@ -1,0 +1,26 @@
+{
+  "name": "TicTacToeMultiPlayer",
+  "version": "0.0.1",
+  "description": "TicTacToe multiplayer game",
+  "main": "index.js",
+  "scripts": {
+    "test": "null"
+  },
+  "repository": {
+    "type": "git",
+    "url": "null"
+  },
+  "keywords": [
+    "TicTacToe",
+    "Multiplyer",
+    "NodeJS"
+  ],
+  "author": "Sumeet Singh",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-ws": "^1.0.0",
+    "shortid": "^2.2.4",
+    "socket.io": "^1.4.5"
+  }
+}
