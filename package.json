@@ -22,5 +22,8 @@
     "express-ws": "^1.0.0",
     "shortid": "^2.2.4",
     "socket.io": "^1.4.5"
+  },
+  "engines":{
+    "node":"0.12.1"
   }
 }

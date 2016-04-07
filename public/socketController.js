@@ -165,11 +165,9 @@ angular.module('ticTacToe').controller('gameCtrl', ['$scope', '$uibModal', funct
                 if (data.hasWon) {
                     //You won.
                     lostWonModalScope.hasWon = true;
-
                 } else {
                     //You lost.
                     lostWonModalScope.hasWon = false;
-
                 }
 
                 //Show modal

@@ -6,7 +6,7 @@ var express = require('express'),
     judge = require('./judge');
 
 var currentGames = {};
-
+var port = process.env.PORT || 3000;
 
 app.use(express.static('./public'));
 app.use(express.static('./bower_components'));
@@ -84,7 +84,7 @@ io.on('connection', function (socket) {
 });
 
 
-server.listen(3000, function () {
+server.listen(port, function () {
     console.log('connected');
 });
 
